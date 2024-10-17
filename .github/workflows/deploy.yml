@@ -1,0 +1,27 @@
+name: Deploy to Ubuntu EC2 Instance
+
+on:
+  push:
+    branches:
+      - main  # Ubah sesuai dengan branch yang kamu inginkan
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_KEY_FOR_ILYAS_INSTANCE }}
+    
+    # nyoba otomasi git pull ke server azzuri, belom ke server manik.
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no azzuri@3.91.108.88 '
+        cd /var/www/html &&
+        sudo git pull origin main
+        '
