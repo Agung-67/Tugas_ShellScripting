@@ -23,5 +23,5 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no azzuri@3.91.108.88 '
         cd /var/www/html &&
-        sudo git pull origin main
+        echo "password" | sudo -S git pull origin main
         '
